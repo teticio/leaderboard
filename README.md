@@ -5,3 +5,5 @@ You can create a bar chart race project for free in Florish https://app.flourish
 
 Then run this script
 `python leaderboard kaggle-competition-name --user flourish-user-name --password flourish-password --project flourish-project-number`
+
+![](https://github.com/teticio/leaderboard/blob/master/Global%20Wheat%20Detection%20-%20Kaggle%20competition.png?raw=true)

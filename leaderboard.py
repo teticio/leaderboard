@@ -73,5 +73,5 @@ if __name__ == '__main__':
                 pass
             driver.quit()
 
-            while (datetime.now(pytz.timezone('Europe/London')) - now) < timedelta(minutes=every_x_mins):
-                sleep(1)
+        while (datetime.now(pytz.timezone('Europe/London')) - now) < timedelta(minutes=every_x_mins):
+            sleep(1)

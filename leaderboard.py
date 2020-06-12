@@ -17,14 +17,13 @@ if __name__ == '__main__':
     parser.add_argument('--user', type=str, help='Flourish user name')
     parser.add_argument('--password', type=str, help='Flourish password')
     parser.add_argument('--project', type=str, help='Flourish project number (https://app.flourish.studio/@flourish/bar-chart-race)')
+    parser.add_argument('--every', type=int, help='Repeat every x minutes')
     args = parser.parse_args()
     competition = args.competition
     user = args.user
     password = args.password
     project = args.project
-    
-    every_x_mins = 5
-    timeout = 5
+    every_x_mins = 5 if args.every is None else args.every
     
     try:
         leaderboard = pd.read_csv(f'{competition}-leaderboard.csv', index_col='TeamName')
@@ -52,6 +51,7 @@ if __name__ == '__main__':
         leaderboard.to_csv(f'{competition}-leaderboard.csv')
 
         if user is not None and password is not None and project is not None:
+            timeout = 5
             try:
                 driver = webdriver.Chrome()
                 driver.get('https://flourish.studio/')

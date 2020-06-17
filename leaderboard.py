@@ -14,12 +14,14 @@ from selenium.webdriver.support import expected_conditions as EC
 if __name__ == '__main__':
     parser = argparse.ArgumentParser()
     parser.add_argument('competition', type=str, help='Kaggle competition name')
+    parser.add_argument('-low', action='store_true', help='Lower score is better')
     parser.add_argument('--user', type=str, help='Flourish user name')
     parser.add_argument('--password', type=str, help='Flourish password')
     parser.add_argument('--project', type=str, help='Flourish project number (https://app.flourish.studio/@flourish/bar-chart-race)')
     parser.add_argument('--every', type=int, help='Repeat every x minutes')
     args = parser.parse_args()
     competition = args.competition
+    low = args.low
     user = args.user
     password = args.password
     project = args.project
@@ -40,7 +42,7 @@ if __name__ == '__main__':
         with ZipFile(f'{competition}.zip') as zf:
             zf.extractall()
         df = pd.read_csv(f'{competition}-publicleaderboard.csv')
-        df = df.drop(columns=['TeamId', 'SubmissionDate']).groupby('TeamName').agg('max').sort_values(['Score'], ascending=0)
+        df = df.drop(columns=['TeamId', 'SubmissionDate']).groupby('TeamName').agg('min' if low else 'max').sort_values(['Score'], ascending=low)
         if first_time:
             leaderboard = pd.DataFrame(index = df.index)
             first_time = False
